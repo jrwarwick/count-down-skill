@@ -1,3 +1,4 @@
-Count down from 10
-Count backwards from 30
-Give us a 60 second count down
+Count down from {count_number} 
+Count backwards from {count_number}
+Give us a {count_number} second count down
+Begin counting back from {count_number}
