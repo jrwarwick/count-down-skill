@@ -1,4 +1,6 @@
 Count down from {count_number} 
 Count backwards from {count_number}
 Give us a {count_number} second count down
+Give me a {count_number} second count down
 Begin counting back from {count_number}
+Begin counting down from {count_number}
