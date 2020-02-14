@@ -1,5 +1,6 @@
 from mycroft import MycroftSkill, intent_file_handler
 import datetime
+import re
 
 __author__ = 'jrwarwick'
 
@@ -30,12 +31,20 @@ class CountDown(MycroftSkill):
 
     def decrement(self,speed):
         numeral = self.settings["count_number"] 
-        self.log.debug(numeral)
-        self.speak(str(numeral))
-        self.settings["count_number"] = str(int(self.settings["count_number"]) - 1)
-        if int(numeral) <= 0:
-            self.log.debug("TERMINATING the countdown, normally.")
+        re_numerals_only = re.compile(r'^\d+$')
+        if not re_numerals_only.search(numeral):
+            #TODO: make an attempt at using some parsing/comprehension/helper/utility functions 
+            #to extract the intended quantity here if it was spelled out, like "twenty" or "eight"
+            self.speak('Sorry, I cannot continue the count. I got confused.')
+            self.log.info("TERMINATING the countdown, had a bad numeral to deal with.")
             self.cancel_all_repeating_events()
+        else:
+            self.log.debug(numeral)
+            self.speak(str(numeral))
+            self.settings["count_number"] = str(int(self.settings["count_number"]) - 1)
+            if int(numeral) <= 0:
+                self.log.info("TERMINATING the countdown, normally.")
+                self.cancel_all_repeating_events()
 
 def create_skill():
     return CountDown()
