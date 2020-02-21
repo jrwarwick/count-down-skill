@@ -22,7 +22,10 @@ class CountDown(MycroftSkill):
     def handle_down_count(self, message):
         self.settings["count_number"] = 11 #reasonable default??
         self.settings["count_speed"] = 2
-        #self.speak_dialog('down.count')
+        #this cheesey pseudo random probably should be replaced
+        #perhaps with a settingsmeta for "verbosity"
+        if int(datetime.datetime.now().strftime('%S')[1]) < 3:
+            self.speak_dialog('down.count')
         # Start a callback that repeats every .5, 1, or 2 seconds (slow, normal, quick)
         now = datetime.datetime.now()
         self.log.debug(now)
